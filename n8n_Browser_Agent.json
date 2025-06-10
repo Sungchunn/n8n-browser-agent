@@ -1,0 +1,469 @@
+{
+  "name": "n8n Browser Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Browser Agents\n",
+        "height": 260,
+        "width": 700,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        60,
+        -100
+      ],
+      "id": "d8f9df9f-a222-46aa-8627-ac30d2039e65",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Model/Memory \n",
+        "height": 260,
+        "width": 360,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        -100
+      ],
+      "id": "30fab3b9-7bfa-487a-a0b6-37732adb42da",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Think \n",
+        "height": 220
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        200
+      ],
+      "id": "4aaba1a3-51d2-498d-8f82-84d424426937",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Think",
+        "height": 420,
+        "width": 700,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        60,
+        200
+      ],
+      "id": "57ce4f10-82a8-410d-a992-b89d2fc30644",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        120,
+        -20
+      ],
+      "id": "423be287-8c30-4f87-a066-22f56ea73216",
+      "name": "When chat message received",
+      "webhookId": "0646f263-d07b-459a-a1d9-2409d309ca5c"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=# Overview  \nYou are a smart, advanced web agent connected to tools that let you control a remote web browser. Your primary goal is to fulfill the human’s request accurately and efficiently by interacting with web pages using your tools.\n\n## Tools\n\n### Start_Browser  \n- Always begin with this tool.  \n- Returns a `sessionId` and `windowId` which are **required** for all other tools.  \n- You must include these IDs in every subsequent tool call.\n\n### Load URL  \n- Loads a website in the browser window.  \n- Pass the `sessionId`, `windowId`, and the desired URL (e.g., `\"https://www.bestbuy.com\"`).\n\n### Query  \n- You don’t have direct access to the browser’s screen, but you can call this tool to retrieve information and hints about the current page.  \n- Use it to fetch any data the human has asked for.\n\n### Click  \n- Simulates a click on a page element (e.g., a button or link).\n\n### Type  \n- Types text into a visible input field.  \n- Automatically sends an Enter key after typing, so do **not** include `[ENTER]` yourself.\n\n### End Session  \n- Properly closes the browser session when the task is complete.  \n- You **must** always call this tool before replying to the human.\n\n### Think  \n- Use to reflect on what you’ve done and plan your next steps.  \n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        300,
+        -20
+      ],
+      "id": "fec1b176-1b8e-46a2-8ba1-bdd751b24e89",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -140,
+        20
+      ],
+      "id": "ad8e6994-fc47-4b23-b755-c3149af47630",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -280,
+        0
+      ],
+      "id": "8251e60f-6faa-4eb5-9819-84d55574c1f7",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "NXPihSabo7xdObkc",
+          "name": "Tutorial "
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        280
+      ],
+      "id": "087d47af-365a-4b04-b300-1fe17c2864cb",
+      "name": "Think"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [
+        280,
+        460
+      ],
+      "id": "9d87ba30-f01f-43ec-8d60-eabcba5b756e",
+      "name": "Airtop: Load Url"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [
+        620,
+        460
+      ],
+      "id": "6d67ae66-b0f3-41de-ad10-295442ba4323",
+      "name": "Airtop: End Session1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ],
+      "id": "3ed3eb21-e2e5-45de-a296-b38df51ff0ad",
+      "name": "Airtop: Query2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [
+        120,
+        460
+      ],
+      "id": "53a75f30-a454-4319-bd83-5046dbd14e57",
+      "name": "Airtop: Type1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -260,
+        760
+      ],
+      "id": "0c550923-0d1c-4586-89e0-6bafdcafa239",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        760
+      ],
+      "id": "799923e7-1203-43a7-858b-c798c8de2ce7",
+      "name": "Airtop"
+    },
+    {
+      "parameters": {
+        "resource": "window",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtop",
+      "typeVersion": 1,
+      "position": [
+        160,
+        760
+      ],
+      "id": "b313db2e-1339-4873-8df4-b4ef839a91df",
+      "name": "Airtop1"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "channelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        380,
+        760
+      ],
+      "id": "3abeb0ef-9044-4230-85cd-097e825a407e",
+      "name": "Discord",
+      "webhookId": "bc2e32c9-e313-4f75-9993-784f2570f270"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        600,
+        760
+      ],
+      "id": "00fa2d90-f363-48bb-bcb1-5b25031a26b0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## Start Browser Tool \n",
+        "height": 320,
+        "width": 1100,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        660
+      ],
+      "id": "7ac5d281-5f0b-4f76-a272-d4a7acfe8ef7",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        280,
+        280
+      ],
+      "id": "2cbf23e5-672b-4aa7-878e-f1240788af42",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        120,
+        280
+      ],
+      "id": "c260861e-a1c9-488f-85ff-5f78a218f0f7",
+      "name": "Call Start Browser Tool"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtop: End Session1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtop: Load Url": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtop: Query2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtop: Type1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtop": {
+      "main": [
+        [
+          {
+            "node": "Airtop1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtop1": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discord": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Airtop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Start Browser Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2a885358-1c47-47aa-b974-36b19b9ad20c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "529d3bc8e17069f24d690f96cc5ee9be68d03f7366bb114ddb76b5c3e8f797b0"
+  },
+  "id": "pm6iEBCb7L74DQBC",
+  "tags": []
+}
